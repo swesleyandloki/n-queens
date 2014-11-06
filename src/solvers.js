@@ -107,7 +107,7 @@ window.countNQueensSolutions = function(n) {
   var solnCount = 0;
   var recursiveBit = function(n, board, curRow){
     board = board || new Board({n:n});
-    board.printBoard();
+    // board.printBoard();
     curRow = curRow || 0;
     if (curRow===n){
       solnCount++;
@@ -115,11 +115,15 @@ window.countNQueensSolutions = function(n) {
       for(var col=0; col<n; col++){
           board.togglePiece(curRow,col);
           debugger;
-        if(board.hasAnyQueenConflictsOn(curRow,col)){
-          board.togglePiece(curRow,col);
-        }else{
-          recursiveBit(n, board, curRow+1);
+        // if(board.hasAnyQueenConflictsOn(curRow,col)){
+        //   board.togglePiece(curRow,col);
+        // }else{
+        //   recursiveBit(n, board, curRow+1);
+        // }
+        if(!board.hasAnyQueenConflictsOn(curRow,col)){
+          recursiveBit(n,board,curRow+1);
         }
+        board.togglePiece(curRow,col);
       }
     }
   }

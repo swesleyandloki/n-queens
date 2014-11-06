@@ -104,32 +104,27 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = 0;
-  var matrix = [];
-
-  for (var i = 0; i < n; i++) {
-    var row = Math.pow(2, i).toString(2);
-    if (row.length < n) {
-      for (var j = row.length; j < n; j++) {
-        row = '0' + row;
+  var solnCount = 0;
+  var recursiveBit = function(n, board, curRow){
+    board = board || new Board({n:n});
+    board.printBoard();
+    curRow = curRow || 0;
+    if (curRow===n){
+      solnCount++;
+    } else {
+      for(var col=0; col<n; col++){
+          board.togglePiece(curRow,col);
+          debugger;
+        if(board.hasAnyQueenConflictsOn(curRow,col)){
+          board.togglePiece(curRow,col);
+        }else{
+          recursiveBit(n, board, curRow+1);
+        }
       }
     }
-    row = row.split('').map(function(el){
-      return Number(el);
-    });
-    matrix.push(row);
   }
-
-  var possible_solutions = permutations(matrix);
-  for(var i = 0; i < possible_solutions.length; i++){
-    var board = new Board(possible_solutions[i]);
-    if(!board.hasAnyQueensConflicts()){
-      solutionCount++;
-    }
-  }
-
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-  return solutionCount;
+  recursiveBit(n);
+  return solnCount;
 };
 
 

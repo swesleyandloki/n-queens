@@ -200,10 +200,17 @@
         }
       }
       return false;
-    }
+    },
 
     /*--------------------  End of Helper Functions  ---------------------*/
-
+    printBoard: function(){
+      var n = this.get('n');
+      var i;
+      console.log('###############################################');
+      for (var i = 0; i < n; i++) {
+        console.log(this.get(''+i));
+      }
+    }
 
   });
 
